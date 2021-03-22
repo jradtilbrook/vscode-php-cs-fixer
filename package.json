@@ -3,6 +3,7 @@
   "license": "MIT",
   "publisher": "jradtilbrook",
   "author": "jradtilbrook",
+  "icon": "logo.png",
   "homepage": "https://github.com/jradtilbrook/vscode-php-cs-fixer",
   "displayName": "PHP CS Fixer",
   "description": "Fix your PHP code with php-cs-fixer",
