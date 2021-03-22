@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
                     });
                     fixer.stdout.on('end', () => {
                         let json: PHPCSFixerOutput = JSON.parse(rawOutput);
-                        console.log(json.files[0].diff);
+                        console.log(json.files[0]?.diff ?? 'no diff');
                         // get the whole document range to apply over
                         const lastLine = document.lineAt(document.lineCount - 1).range.end;
                         const range = new vscode.Range(document.positionAt(0), lastLine);
