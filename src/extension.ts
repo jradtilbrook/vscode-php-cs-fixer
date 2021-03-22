@@ -23,30 +23,41 @@ interface PHPCSFixerDiff {
 export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerDocumentFormattingEditProvider('php', {
         provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.ProviderResult<vscode.TextEdit[]> {
-            // TODO: handle cancelling token thing (is this used if its run quickly sequentially?)
-            // exit early if no changes have been made
-            if (!document.isDirty) {
-                return [];
-            }
-
-            const args = [
-                'fix',
-                '--dry-run',
-                '--diff',
-                '--diff-format=udiff',
-                '--format=json',
-                '--rules=@PSR12',
-                '-',
-            ];
-            const opts = {
-                cwd: path.dirname(document.fileName),
-                env: process.env,
-            };
-            let fixer = spawn(`${homedir()}/Developer/he/megatron/vendor/bin/php-cs-fixer`, args, opts);
-            fixer.stdin.write(document.getText());
-            fixer.stdin.end();
-
             return new Promise<vscode.TextEdit[]>((resolve, reject) => {
+                // exit early if no changes have been made
+                if (!document.isDirty) {
+                    return [];
+                }
+
+                // determine the working directory to run php-cs-fixer from
+                // this allows it to read the configuration file if its present
+                let workingDir = path.dirname(document.fileName);
+                if (vscode.workspace.workspaceFolders !== undefined) {
+                    workingDir = vscode.workspace.workspaceFolders[0].uri.fsPath;
+                }
+
+                // if a vendored php-cs-fixer doesnt exist
+                if (!fs.existsSync(`${workingDir}/vendor/bin/php-cs-fixer`)) {
+                    return [];
+                }
+
+                const args = [
+                    'fix',
+                    '--dry-run',
+                    '--diff',
+                    '--diff-format=udiff',
+                    '--format=json',
+                    '-',
+                ];
+                const opts = {
+                    cwd: workingDir,
+                    env: process.env,
+                };
+                // expect to use the vendored php-cs-fixer
+                let fixer = spawn(`./vendor/bin/php-cs-fixer`, args, opts);
+                fixer.stdin.write(document.getText());
+                fixer.stdin.end();
+
                 fixer.on('error', err => {
                     console.log(err);
                     reject();
