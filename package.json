@@ -25,8 +25,9 @@
   "scripts": {
     "vscode:prepublish": "yarn run package",
     "compile": "webpack",
-    "watch": "webpack --watch",
+    "watch": "yarn run webpack-dev",
     "package": "webpack --mode production --devtool hidden-source-map",
+    "webpack-dev": "webpack --mode development --watch",
     "test-compile": "tsc -p ./",
     "test-watch": "tsc -watch -p ./",
     "pretest": "yarn run test-compile && yarn run lint",

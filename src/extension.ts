@@ -60,12 +60,14 @@ export function activate(context: vscode.ExtensionContext) {
                     });
                     fixer.stdout.on('end', () => {
                         let json: PHPCSFixerOutput = JSON.parse(rawOutput);
+                        console.log(json.files[0].diff);
                         // get the whole document range to apply over
                         const lastLine = document.lineAt(document.lineCount - 1).range.end;
                         const range = new vscode.Range(document.positionAt(0), lastLine);
 
                         // apply the generate diff patch from php-cs-fixer to the whole document
                         let output = applyPatch(document.getText(), json.files[0]?.diff ?? '');
+                        console.log(output);
 
                         resolve([new vscode.TextEdit(range, output)]);
                     });
