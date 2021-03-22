@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
             return new Promise<vscode.TextEdit[]>((resolve, reject) => {
                 // exit early if no changes have been made
                 if (!document.isDirty) {
-                    return [];
+                    return resolve([]);
                 }
 
                 // determine the working directory to run php-cs-fixer from
@@ -38,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 // if a vendored php-cs-fixer doesnt exist
                 if (!fs.existsSync(`${workingDir}/vendor/bin/php-cs-fixer`)) {
-                    return [];
+                    return resolve([]);
                 }
 
                 const args = [
@@ -80,7 +80,7 @@ export function activate(context: vscode.ExtensionContext) {
                         let output = applyPatch(document.getText(), json.files[0]?.diff ?? '');
                         console.log(output);
 
-                        resolve([new vscode.TextEdit(range, output)]);
+                        return resolve([new vscode.TextEdit(range, output)]);
                     });
                 });
             });
