@@ -1,6 +1,6 @@
 # php-cs-fixer README
 
-This is the README for your extension "php-cs-fixer". After writing up a brief description, we recommend including the following sections.
+This extension provides document formatting using [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
 
 ## Features
 
