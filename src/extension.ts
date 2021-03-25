@@ -38,7 +38,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 // if a vendored php-cs-fixer doesnt exist
                 if (!fs.existsSync(`${workingDir}/vendor/bin/php-cs-fixer`)) {
-                    return resolve([]);
+                    return reject('No php-cs-fixer binary found');
                 }
 
                 const args = [
@@ -47,6 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
                     '--diff',
                     '--diff-format=udiff',
                     '--format=json',
+                    '--allow-risky=yes',
                     '-',
                 ];
                 const opts = {
@@ -54,13 +55,13 @@ export function activate(context: vscode.ExtensionContext) {
                     env: process.env,
                 };
                 // expect to use the vendored php-cs-fixer
-                let fixer = spawn(`./vendor/bin/php-cs-fixer`, args, opts);
+                let fixer = spawn(`${workingDir}/vendor/bin/php-cs-fixer`, args, opts);
                 fixer.stdin.write(document.getText());
                 fixer.stdin.end();
 
                 fixer.on('error', err => {
                     console.log(err);
-                    reject();
+                    reject(err);
                 });
 
                 fixer.on('exit', () => {
@@ -70,17 +71,21 @@ export function activate(context: vscode.ExtensionContext) {
                         rawOutput += chunk.toString();
                     });
                     fixer.stdout.on('end', () => {
-                        let json: PHPCSFixerOutput = JSON.parse(rawOutput);
-                        console.log(json.files[0]?.diff ?? 'no diff');
-                        // get the whole document range to apply over
-                        const lastLine = document.lineAt(document.lineCount - 1).range.end;
-                        const range = new vscode.Range(document.positionAt(0), lastLine);
+                        try {
+                            let json: PHPCSFixerOutput = JSON.parse(rawOutput);
+                            console.log(json.files[0]?.diff ?? 'no diff');
+                            // get the whole document range to apply over
+                            const lastLine = document.lineAt(document.lineCount - 1).range.end;
+                            const range = new vscode.Range(document.positionAt(0), lastLine);
 
-                        // apply the generate diff patch from php-cs-fixer to the whole document
-                        let output = applyPatch(document.getText(), json.files[0]?.diff ?? '');
-                        console.log(output);
+                            // apply the generate diff patch from php-cs-fixer to the whole document
+                            let output = applyPatch(document.getText(), json.files[0]?.diff ?? '');
+                            console.log(output);
 
-                        return resolve([new vscode.TextEdit(range, output)]);
+                            return resolve([new vscode.TextEdit(range, output)]);
+                        } catch (error) {
+                            return reject(error);
+                        }
                     });
                 });
             });
