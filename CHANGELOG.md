@@ -6,5 +6,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.0.2] - 2021-05-07
+- Run formatter even if file is unchanged
+- Cleaning up documentation
+
 ## [0.0.1] - 2021-05-06
 - Initial release

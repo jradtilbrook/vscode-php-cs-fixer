@@ -7,7 +7,7 @@
   "homepage": "https://github.com/jradtilbrook/vscode-php-cs-fixer",
   "displayName": "PHP CS Fixer",
   "description": "Fix your PHP code with php-cs-fixer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/jradtilbrook/vscode-php-cs-fixer.git"
