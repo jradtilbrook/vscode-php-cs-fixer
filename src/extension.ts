@@ -24,11 +24,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.languages.registerDocumentFormattingEditProvider('php', {
         provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.ProviderResult<vscode.TextEdit[]> {
             return new Promise<vscode.TextEdit[]>((resolve, reject) => {
-                // exit early if no changes have been made
-                if (!document.isDirty) {
-                    return resolve([]);
-                }
-
                 // determine the working directory to run php-cs-fixer from
                 // this allows it to read the configuration file if its present
                 let workingDir = path.dirname(document.fileName);
