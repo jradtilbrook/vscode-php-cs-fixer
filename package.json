@@ -8,10 +8,10 @@
   "displayName": "PHP CS Fixer",
   "description": "Fix your PHP code with php-cs-fixer",
   "version": "0.0.1",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/jradtilbrook/vscode-php-cs-fixer.git"
-    },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jradtilbrook/vscode-php-cs-fixer.git"
+  },
   "engines": {
     "vscode": "^1.54.0"
   },
