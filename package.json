@@ -12,6 +12,11 @@
     "type": "git",
     "url": "https://github.com/jradtilbrook/vscode-php-cs-fixer.git"
   },
+  "badges": [{
+    "description": "Tests",
+    "href": "https://github.com/jradtilbrook/vscode-php-cs-fixer/actions/workflows/test.yaml",
+    "url": "https://github.com/jradtilbrook/vscode-php-cs-fixer/actions/workflows/test.yaml/badge.svg"
+  }],
   "engines": {
     "vscode": "^1.54.0"
   },
