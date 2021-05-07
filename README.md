@@ -1,6 +1,6 @@
 # php-cs-fixer
 
-![Tests](https://github.com/jradtilbrook/vscode-php-cs-fixer/actions/workflows/test.yaml/badge.svg)
+![Tests](https://img.shields.io/github/workflow/status/jradtilbrook/vscode-php-cs-fixer/Tests)
 
 This extension provides document formatting using [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer).
 
