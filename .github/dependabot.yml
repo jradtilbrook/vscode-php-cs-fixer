@@ -7,6 +7,6 @@ updates:
     directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 0
     pull-request-branch-name:
       separator: '-'
