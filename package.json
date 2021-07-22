@@ -41,7 +41,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/diff": "^5.0.0",
+    "@types/diff": "^5.0.1",
     "@types/glob": "^7.1.4",
     "@types/mocha": "^8.2.2",
     "@types/node": "^16.0.0",
